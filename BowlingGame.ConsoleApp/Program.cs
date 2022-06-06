@@ -18,32 +18,25 @@ namespace BowlingGame.ConsoleApp
                     Console.Write($"[Frame {currentFrame}/10 | Roll {frameRollCount + 1}] Enter number of Pins knocked down: ");
                     var input = Console.ReadLine();
 
-                    if (int.TryParse(input, out int pins) && pins >= 0 && pins <= 10)
-                    {
-                        if (pins < 0 || pins > 10)
-                        {
-                            WriteErrorMessage("Number of Pins must be between 0 and 10");
-                            continue;
-                        }
-                        else if (frameScore + pins > 10 && currentFrame < 10)
-                        {
-                            WriteErrorMessage($"Max number of remaining pins to be knocked down in current frame: {10 - frameScore}");
-                            continue;
-                        }
-
-                        _game.Roll(pins);
-                        
-                        frameRollCount++;
-                        frameScore += pins;
-
-                        if (ShouldBreakCurrentFrameLoop(currentFrame, frameRollCount, frameScore))
-                        {
-                            break;
-                        }
-                    }
-                    else
+                    if (!int.TryParse(input, out int pins) || pins < 0 || pins > 10)
                     {
                         WriteErrorMessage("Enter a valid number between 0 and 10");
+                        continue;
+                    }
+                    else if (frameScore + pins > 10 && currentFrame < 10)
+                    {
+                        WriteErrorMessage($"Max number of remaining pins to be knocked down in current frame: {10 - frameScore}");
+                        continue;
+                    }
+
+                    _game.Roll(pins);
+
+                    frameRollCount++;
+                    frameScore += pins;
+
+                    if (ShouldBreakCurrentFrameLoop(currentFrame, frameRollCount, frameScore))
+                    {
+                        break;
                     }
                 }
             }
