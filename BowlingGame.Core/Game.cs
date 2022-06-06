@@ -26,17 +26,17 @@
             {
                 if (IsStrike())
                 {
-                    score += GetStrikeScore();
+                    score += CaulculateStrikeScore();
                     rollIndex++;
                 }
                 else if (IsSpare())
                 {
-                    score += GetSpareScore();
+                    score += CalculateSpareScore();
                     rollIndex += 2;
                 }
                 else
                 {
-                    score += GetNormalScore();
+                    score += CalculateNormalScore();
                     rollIndex += 2;
                 }
             }
@@ -47,13 +47,13 @@
             bool IsSpare() => _rolls[rollIndex] + _rolls[rollIndex + 1] == 10;
 
             // Strike score = 10 (current frame) + the combined score of the two rolls in the next frame
-            int GetStrikeScore() => 10 + _rolls[rollIndex + 1] + _rolls[rollIndex + 2];
+            int CaulculateStrikeScore() => 10 + _rolls[rollIndex + 1] + _rolls[rollIndex + 2];
 
             // Spare score = 10 (current frame) + the score of the first roll in next frame
-            int GetSpareScore() => 10 + _rolls[rollIndex + 2];
+            int CalculateSpareScore() => 10 + _rolls[rollIndex + 2];
 
             // Normal score = the combined score of the two rolls in current frame
-            int GetNormalScore() => _rolls[rollIndex] + _rolls[rollIndex + 1];
+            int CalculateNormalScore() => _rolls[rollIndex] + _rolls[rollIndex + 1];
         }
     }
 }
