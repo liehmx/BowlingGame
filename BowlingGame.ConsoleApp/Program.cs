@@ -4,10 +4,10 @@ namespace BowlingGame.ConsoleApp
 {
     internal class Program
     {
+        private static Game _game = new();
+
         static void Main(string[] args)
         {
-            var game = new Game();
-
             for (int currentFrame = 1; currentFrame <= 10; currentFrame++)
             {
                 var frameScore = 0;
@@ -31,7 +31,7 @@ namespace BowlingGame.ConsoleApp
                             continue;
                         }
 
-                        game.Roll(pins);
+                        _game.Roll(pins);
                         
                         frameRollCount++;
                         frameScore += pins;
@@ -48,12 +48,17 @@ namespace BowlingGame.ConsoleApp
                 }
             }
 
-            var score = game.Score();
+            DisplayGameScore();
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadLine();
+        }
+
+        private static void DisplayGameScore()
+        {
+            var score = _game.Score();
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"Total game score: {score}");
             Console.ResetColor();
-            Console.WriteLine("Press any key to exit...");
-            Console.ReadLine();
         }
 
         private static bool ShouldBreakCurrentFrameLoop(int currentFrame, int frameRollCount, int frameScore)
